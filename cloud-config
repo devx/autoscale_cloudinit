@@ -1,0 +1,16 @@
+#cloud-config
+
+packages:
+
+ - apache2
+ - php5
+ - php5-mysql
+ - mysql-server
+
+runcmd:
+
+ - wget http://wordpress.org/latest.tar.gz -P /tmp/
+ - tar -zxf /tmp/latest.tar.gz -C /var/www/
+ - mysql -e "create database wordpress; create user 'wpuser'@'localhost' identified by 'changemetoo'; grant all privileges on wordpress . \* to 'wpuser'@'localhost'; flush privileges;"
+ - mysql -e "drop database test; drop user 'test'@'localhost'; flush privileges;"
+ - mysqladmin -u root password 'changeme'
