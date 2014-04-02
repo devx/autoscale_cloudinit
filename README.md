@@ -96,7 +96,35 @@ runcmd:
 One important thing to note is that the "user_data" used for server creation needs to be encoded in a b64 format.  I have included two quick scripts that will encode and decode the file.
 
 <pre><code>
+# encode a file and print the output to shell
+./encode.py cloud-config
+I2Nsb3VkLWNvbmZpZwoKcGFja2FnZXM6CgogLSBhcGFjaGUyCiAtIHBocDUKIC0gcGhwNS1teXNxbAogLSBteXNxbC1zZXJ2ZXIKCnJ1bmNtZDoKCiAtIHdnZXQgaHR0cDovL3dvcmRwcmVzcy5vcmcvbGF0ZXN0LnRhci5neiAtUCAvdG1wLwogLSB0YXIgLXp4ZiAvdG1wL2xhdGVzdC50YXIuZ3ogLUMgL3Zhci93d3cvCiAtIG15c3FsIC1lICJjcmVhdGUgZGF0YWJhc2Ugd29yZHByZXNzOyBjcmVhdGUgdXNlciAnd3B1c2VyJ0AnbG9jYWxob3N0JyBpZGVudGlmaWVkIGJ5ICdjaGFuZ2VtZXRvbyc7IGdyYW50IGFsbCBwcml2aWxlZ2VzIG9uIHdvcmRwcmVzcyAuIFwqIHRvICd3cHVzZXInQCdsb2NhbGhvc3QnOyBmbHVzaCBwcml2aWxlZ2VzOyIKIC0gbXlzcWwgLWUgImRyb3AgZGF0YWJhc2UgdGVzdDsgZHJvcCB1c2VyICd0ZXN0J0AnbG9jYWxob3N0JzsgZmx1c2ggcHJpdmlsZWdlczsiCiAtIG15c3FsYWRtaW4gLXUgcm9vdCBwYXNzd29yZCAnY2hhbmdlbWUnCg==
 
+#encode a file and save it to another file
+./encode.py cloud-config > cloud-config.b64
+
+# print contents of the file
+cat cloud-config.b64
+I2Nsb3VkLWNvbmZpZwoKcGFja2FnZXM6CgogLSBhcGFjaGUyCiAtIHBocDUKIC0gcGhwNS1teXNxbAogLSBteXNxbC1zZXJ2ZXIKCnJ1bmNtZDoKCiAtIHdnZXQgaHR0cDovL3dvcmRwcmVzcy5vcmcvbGF0ZXN0LnRhci5neiAtUCAvdG1wLwogLSB0YXIgLXp4ZiAvdG1wL2xhdGVzdC50YXIuZ3ogLUMgL3Zhci93d3cvCiAtIG15c3FsIC1lICJjcmVhdGUgZGF0YWJhc2Ugd29yZHByZXNzOyBjcmVhdGUgdXNlciAnd3B1c2VyJ0AnbG9jYWxob3N0JyBpZGVudGlmaWVkIGJ5ICdjaGFuZ2VtZXRvbyc7IGdyYW50IGFsbCBwcml2aWxlZ2VzIG9uIHdvcmRwcmVzcyAuIFwqIHRvICd3cHVzZXInQCdsb2NhbGhvc3QnOyBmbHVzaCBwcml2aWxlZ2VzOyIKIC0gbXlzcWwgLWUgImRyb3AgZGF0YWJhc2UgdGVzdDsgZHJvcCB1c2VyICd0ZXN0J0AnbG9jYWxob3N0JzsgZmx1c2ggcHJpdmlsZWdlczsiCiAtIG15c3FsYWRtaW4gLXUgcm9vdCBwYXNzd29yZCAnY2hhbmdlbWUnCg==
+
+# decode the contents of the file that was generated
+./decode.py cloud-config.b64
+#cloud-config
+
+packages:
+
+ - apache2
+ - php5
+ - php5-mysql
+ - mysql-server
+
+runcmd:
+
+ - wget http://wordpress.org/latest.tar.gz -P /tmp/
+ - tar -zxf /tmp/latest.tar.gz -C /var/www/
+ - mysql -e "create database wordpress; create user 'wpuser'@'localhost' identified by 'changemetoo'; grant all privileges on wordpress . \* to 'wpuser'@'localhost'; flush privileges;"
+ - mysql -e "drop database test; drop user 'test'@'localhost'; flush privileges;"
+ - mysqladmin -u root password 'changeme'
 </code></pre>
 #cloud-init
 
