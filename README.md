@@ -1,4 +1,3 @@
-victor.palma@ML3138FFT3  ~/Documents/development/autoscale/autoscale_cloudinit  cat readme.md
 #Rackspace Autoscale + cloudinit
 This document covers Rackspace autoscale and cloudinit.  I will only cover the basic on creating a scaling group via curl.  The web GUI method has been covered before, you can find a good article about it here:
 
@@ -119,7 +118,4 @@ Log files can typically be found in /var/log/cloud-init.log.
 The copy of your cloud-config is stored here: /var/lib/cloud/instance/cloud-config.txt.
 
 The /var/lib/cloud directory also has other useful information, such as files that let cloud-init know it’s already run once so you can rest easy cloud-init isn’t going to setup Apache again if you reboot your server
-
-
-
 
